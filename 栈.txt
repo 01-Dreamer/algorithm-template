@@ -1,0 +1,34 @@
+const int N=1e5;
+
+int stk[N],tt=0;
+
+void init()
+{
+    tt=0;
+}
+
+void push(int x)
+{
+    stk[tt++]=x;
+}
+
+void pop()
+{
+    tt--;
+}
+
+int top()
+{
+    if(tt>0) return stk[tt-1];
+    return INT_MIN;
+}
+
+int size()
+{
+    return tt;
+}
+
+bool empty()
+{
+    return tt==0;
+}
