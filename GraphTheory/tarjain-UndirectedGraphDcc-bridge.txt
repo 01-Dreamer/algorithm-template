@@ -29,7 +29,7 @@ void tarjan(int u,int from)
         {
             tarjan(j,i);
             low[u]=min(low[u],low[j]);
-            if(low[u]<dfn[j]) is_bridge[i]=is_bridge[i^1]=true;
+            if(dfn[u]<low[j]) is_bridge[i]=is_bridge[i^1]=true;
         }
         else if(i!=(from^1)) low[u]=min(low[u],dfn[j]);
     }
