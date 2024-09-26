@@ -1,0 +1,19 @@
+int l=...,r=...;
+    int f1,f2;
+    while(l<r)
+    {
+        int lmid=l+(r-l)/3;
+        int rmid=r-(r-l)/3;
+        f1=f(lmid),f2=f(rmid);
+        
+        if(f1<=f2) r=rmid-1;
+        else l=lmid+1;
+        
+        /*
+        if(f1>=f2) l=lmid+1;
+        else r=rmid-1;
+        */
+        
+    }
+    cout<<min(f1,f2)<<'\n';
+    //cout<<max(f1,f2)<<'\n'
