@@ -1,0 +1,74 @@
+#include<iostream>
+#include<cstring>
+
+using namespace std;
+const int N=5010,M=10010;
+int h[N],e[M],ne[M],w[M],idx;
+int stk[N],top;
+int dist[N],cnt[N];
+bool st[N];
+int n,m;
+
+void add(int a,int b,int c)
+{
+    e[idx]=b,w[idx]=c,ne[idx]=h[a],h[a]=idx++;
+}
+
+bool spfa(int u)
+{
+    memset(dist,0x3f,sizeof dist);
+    dist[u]=0;
+    stk[++top]=u;
+    st[u]=true;
+
+    while(top)
+    {
+        int t=stk[top--];
+        st[t]=false;
+
+        for(int i=h[t];~i;i=ne[i])
+        {
+            int j=e[i];
+            cnt[j]=cnt[t]+1;
+            if(cnt[j]>=n+1) return false;
+            if(dist[j]>dist[t]+w[i])
+            {
+                dist[j]=dist[t]+w[i];
+                if(!st[j])
+                {
+                    stk[++top]=j;
+                    st[j]=true;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+
+int main()
+{
+    scanf("%d%d",&n,&m);
+
+    memset(h,-1,sizeof h);
+    for(int i=1;i<=n;i++) add(0,i,0);
+
+    int a,b,c;
+    while(m--)
+    {
+        scanf("%d%d%d",&a,&b,&c);
+        add(b,a,c);
+    }
+
+    if(!spfa(0)) puts("NO");
+    else
+    {
+        for(int i=1;i<=n;i++)
+            printf("%d ",dist[i]);
+    }
+
+
+    return 0;
+}
+//get_min <==> max_dist
+//get_max <==> min_dist
