@@ -1,0 +1,45 @@
+/*
+1.定 N 个闭区间 [ai,bi]，请你在数轴上选择尽量少的点，使得每个区间内至少包含一个选出的点（位于区间端点上的点也算作区间内）。
+2.给定 N个闭区间 [ai,bi]，请你在数轴上选择若干区间（最大数量），使得选中的区间之间互不相交（包括端点）。
+*/
+
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+const int N=1e5+10;
+struct Node
+{
+    int l,r;
+    
+    bool operator < (const Node& t) const
+    {
+        return r<t.r;
+    }
+    
+}e[N];
+int n;
+
+
+int main()
+{
+    cin>>n;
+    for(int i=0;i<n;i++) cin>>e[i].l>>e[i].r;
+    sort(e,e+n);
+    
+    int res=0,r=-2e9;
+    for(int i=0;i<n;i++)
+    {
+        if(e[i].l>r)
+        {
+            r=e[i].r;
+            res++;
+        }
+    }
+    
+    cout<<res<<'\n';
+    
+    
+    return 0;
+}
