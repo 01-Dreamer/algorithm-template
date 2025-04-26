@@ -1,0 +1,81 @@
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+
+#define x first
+#define y second
+
+using namespace std;
+typedef pair<double,double> PDD;
+const int N=10010;
+int stk[N],top;
+int used[N];
+PDD p[N];
+int n;
+
+
+PDD operator - (PDD a,PDD b)
+{
+    return {a.x-b.x,a.y-b.y};
+}
+
+double cross(PDD a,PDD b)
+{
+    return a.x*b.y-a.y*b.x;
+}
+
+double area(PDD a,PDD b,PDD c)
+{
+    return cross(b-a,c-a);
+}
+
+double get_dist(PDD a,PDD b)
+{
+    double dx=a.x-b.x;
+    double dy=a.y-b.y;
+    return sqrt(dx*dx+dy*dy);
+}
+
+double andrew()
+{
+    sort(p,p+n);
+    
+    for(int i=0;i<n;i++)
+    {
+        while(top>=2&&area(p[stk[top-1]],p[stk[top]],p[i])<=0)
+        {
+            if(area(p[stk[top-1]],p[stk[top]],p[i])<0)
+               used[stk[top--]]=false;
+            else top--;
+        }
+        stk[++top]=i;
+        used[i]=true;
+    }
+    used[0]=false;
+    
+    for(int i=n-1;i>=0;i--)
+    {
+        if(used[i]) continue;
+        while(top>=2&&area(p[stk[top-1]],p[stk[top]],p[i])<=0)
+           used[stk[top--]]=false;
+        stk[++top]=i;
+        used[i]=true;
+    }
+    
+    double res=0;
+    for(int i=2;i<=top;i++)
+       res+=get_dist(p[stk[i-1]],p[stk[i]]);
+       
+    return res;
+}
+
+
+int main()
+{
+    scanf("%d",&n);
+    for(int i=0;i<n;i++) scanf("%lf%lf",&p[i].x,&p[i].y);
+    printf("%.2lf",andrew());
+    
+    
+    return 0;
+}
