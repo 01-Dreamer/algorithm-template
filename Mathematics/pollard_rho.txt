@@ -1,0 +1,111 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+typedef long long LL;
+typedef __int128_t int128;
+
+mt19937 eng(time(nullptr));
+LL getRand(LL a,LL b)
+{
+    uniform_int_distribution<int>dis(a,b);
+    return dis(eng);
+}
+
+LL gcd(LL a,LL b)
+{
+    return b==0?a:gcd(b,a%b);
+}
+
+LL qmi(LL a,LL n,LL p)
+{
+    LL res=1;
+    while(n)
+    {
+        if(n&1) res=((int128)res*a)%p;
+        a=((int128)a*a)%p;
+        n>>=1;
+    }
+    return res;
+}
+
+LL Base[7]={2,325,9375,28178,450775,9780504,1795265022};
+bool miller_rabin(LL x)
+{
+    if(x<3) return x == 2;
+    if (x%2==0) return false;
+
+    LL d =x-1,r=0;
+    while(d%2==0)d/=2,r++;
+    for (LL a:Base)
+    {
+        LL v=qmi(a, d, x);
+        if (v<=1||v==x-1) continue;
+        for (int i=0;i<r;i++)
+        {
+            v=(int128)v*v%x;
+            if (v==x-1&&i!=r-1)
+            {
+                v=1;
+                break;
+            }
+            if(v==1) return false;
+        }
+        if(v!=1) return false;
+    }
+    return true;
+}
+
+LL pollard_rho(LL n)
+{
+    if (n==4) return 2;
+    if(miller_rabin(n)) return n;
+    while (true)
+    {
+        LL c=getRand(1,n-1);
+        auto f = [&](LL x) {return((int128)x*x+c)%n;};
+        LL t=f(0),r=f(f(0));
+        while (t!=r)
+        {
+            LL d=gcd(abs(t-r),n);
+            if(d>1) return d;
+            t=f(t),r=f(f(r));
+        }
+    }
+}
+
+void get_factor(LL n,map<LL,int>& res)
+{
+    if(n==1) return;
+    if(miller_rabin(n)) res[n]++;
+    else
+    {
+        LL x=pollard_rho(n);
+        get_factor(x,res);
+        get_factor(n/x,res);
+    }
+}
+
+void solve()
+{
+    LL n;
+    cin>>n;
+    map<LL,int>res;
+    get_factor(n,res);
+    for(auto[key,val]:res)
+        cout<<key<<' '<<val<<'\n';
+    cout<<'\n';
+}
+
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    int T=1;
+    cin>>T;
+    while(T--) solve();
+
+    return 0;
+}
