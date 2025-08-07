@@ -8,7 +8,7 @@ const int N=3e5+10;
 LL a[N],b[N];
 int rev[N];
 int bit,tot;
-
+ int n,m;
 
 LL qmi(LL a,LL n)
 {
@@ -47,7 +47,6 @@ void NTT(LL a[],int type)
 
 int main()
 {
-    int n,m;
     cin>>n>>m;
     for(int i=0;i<=n;i++) cin>>a[i];
     for(int i=0;i<=m;i++) cin>>b[i];

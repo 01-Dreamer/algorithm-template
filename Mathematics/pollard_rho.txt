@@ -62,7 +62,7 @@ LL pollard_rho(LL n)
     while (true)
     {
         LL c=getRand(1,n-1);
-        auto f = [&](LL x) {return((int128)x*x+c)%n;};
+        auto f=[&](LL x) {return((int128)x*x+c)%n;};
         LL t=f(0),r=f(f(0));
         while (t!=r)
         {
