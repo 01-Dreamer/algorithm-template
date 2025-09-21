@@ -13,7 +13,6 @@ int l=...,r=...;
         if(f1>=f2) l=lmid+1;
         else r=rmid-1;
         */
-        
     }
     cout<<min(f1,f2)<<'\n';
     //cout<<max(f1,f2)<<'\n'
