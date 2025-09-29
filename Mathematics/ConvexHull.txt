@@ -9,7 +9,7 @@ using namespace std;
 typedef pair<double,double> PDD;
 const int N=10010;
 int stk[N],top;
-int used[N];
+bool used[N];
 PDD p[N];
 int n;
 
