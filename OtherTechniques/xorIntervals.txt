@@ -37,7 +37,6 @@ vector<PII> xorIntervals(int l,int r,int x)
         int L=(b^x)&(~(len-1));
         intervals.push_back({L,L+len-1});
     }
-
     sort(intervals.begin(),intervals.end());
 
     vector<PII> res;
