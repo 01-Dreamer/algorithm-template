@@ -66,3 +66,81 @@ int main()
           
     return 0;
 }
+
+//////////////////////////////////////////////////////////
+
+#include <bits/stdc++.h>
+
+using namespace std;
+const int N=110;
+bitset<N> a[N];
+int n;
+
+
+int gauss()
+{
+    int r,c;
+    for(r=c=0;c<n;c++)
+    {
+        int t=-1;
+        for(int i=r;i<n;i++)
+           if(a[i][c])
+           {
+               t=i;
+               break;
+           }
+
+        if(t==-1) continue;
+
+        for(int i=c;i<=n;i++)
+        {
+            int A=a[r][i],B=a[t][i];
+            swap(A,B);
+            a[r][i]=A,a[t][i]=B;
+        }
+        for(int i=r+1;i<n;i++)
+           if(a[i][c]) a[i]^=a[r];
+
+        r++;
+    }
+
+    if(r<n)
+    {
+        for(int i=r;i<n;i++)
+           if(a[i][n]) return 1;
+        return 2;
+    }
+
+    for(int i=n-2;i>=0;i--)
+       for(int j=i+1;j<n;j++)
+           a[i][n]=a[i][n]^(a[i][j]*a[j][n]);
+
+    return 0;
+}
+
+
+int main()
+{
+    scanf("%d",&n);
+
+    for(int i=0;i<n;i++)
+       for(int j=0;j<n+1;j++)
+       {
+           int x;
+           cin>>x;
+           a[i][j]=x;
+       }
+
+    int t=gauss();
+
+    if(t==1) puts("No solution");
+    else if(t==2) puts("Multiple sets of solutions");
+    else
+    {
+        for(int i=0;i<n;i++)
+            cout<<a[i][n]<<'\n';
+    }
+
+
+    return 0;
+}
