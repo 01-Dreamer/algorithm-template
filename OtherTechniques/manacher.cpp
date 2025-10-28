@@ -36,11 +36,9 @@ int manacher(string& str)
 int main()
 {
     string str;
-    
     cin>>str;
-    str=get_str(str);
-    
-    cout<<manacher(str);
+    str=get_str(str); 
+    cout<<manacher(str)<<'\n';
     
     return 0;
 }
