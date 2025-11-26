@@ -7,7 +7,7 @@ typedef __int128_t int128;
 mt19937 eng(time(nullptr));
 LL getRand(LL a,LL b)
 {
-    uniform_int_distribution<int>dis(a,b);
+    uniform_int_distribution<LL>dis(a,b);
     return dis(eng);
 }
 
@@ -96,7 +96,6 @@ void solve()
     cout<<'\n';
 }
 
-
 int main()
 {
     ios::sync_with_stdio(false);
@@ -109,3 +108,4 @@ int main()
 
     return 0;
 }
+
